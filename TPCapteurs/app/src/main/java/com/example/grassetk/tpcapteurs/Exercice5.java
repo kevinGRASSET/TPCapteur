@@ -1,5 +1,6 @@
 package com.example.grassetk.tpcapteurs;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
@@ -10,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +22,8 @@ import android.widget.Toast;
 public class Exercice5 extends AppCompatActivity {
 
     // flash light
-    private CameraManager mCameraManager;
-    private String mCameraId;
-    private ImageButton mTorchOnOffButton;
-    private Float i;
-    private Boolean isTorchOn;
+    private static final int CAMERA_REQUEST = 50;
+    private boolean flashLightStatus = false;
 
 
     private TextView textviewx;
@@ -41,9 +40,8 @@ public class Exercice5 extends AppCompatActivity {
         textviewx=(TextView)findViewById(R.id.textView1);
         textviewa=(TextView)findViewById(R.id.textView4);
 
-        Log.d("FlashLightActivity", "onCreate()");
-        Boolean isFlashAvailable = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        final boolean hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        boolean isEnabled = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
 
         if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0)
         {
@@ -84,7 +82,7 @@ public class Exercice5 extends AppCompatActivity {
         public void onSensorChanged(SensorEvent event) {
 
 
-
+            CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
             if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
                 return;
 
@@ -92,10 +90,25 @@ public class Exercice5 extends AppCompatActivity {
 
             textviewx.setText("X:" + String.valueOf(Math.round(mSensorX)));
 
-            if (Math.round(mSensorX) < 0 || Math.round(mSensorX) > 0) {
-                isTorchOn = true;
+
+
+                try {
+                    if (Math.round(mSensorX) != 0) {
+                        String cameraId = cameraManager.getCameraIdList()[0];
+                        cameraManager.setTorchMode(cameraId, true);
+                        flashLightStatus = true;
+                    }
+                    else {
+                        String cameraId = cameraManager.getCameraIdList()[0];
+                        cameraManager.setTorchMode(cameraId, true);
+                        flashLightStatus = false;
+
+                    }
+
+                } catch (CameraAccessException e) {
+                }
             }
-        }
+
     };
 }
 
