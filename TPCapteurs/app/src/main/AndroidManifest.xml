@@ -6,6 +6,12 @@
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.flash" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +29,9 @@
         <activity android:name=".Exercice1" />
         <activity android:name=".Exercice2" />
         <activity android:name=".Exercice3" />
-        <activity android:name=".Exercice4"></activity>
+        <activity android:name=".Exercice4" />
+        <activity android:name=".Exercice5" />
+        <activity android:name=".Exercice6"></activity>
     </application>
 
 </manifest>
