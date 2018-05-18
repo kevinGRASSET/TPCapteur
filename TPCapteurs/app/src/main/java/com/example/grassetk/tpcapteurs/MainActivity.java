@@ -38,4 +38,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Exercice3.class);
         startActivity(intent);
     }
+
+    public void onClick4(View v) {
+        Intent intent = new Intent(MainActivity.this, Exercice4.class);
+        startActivity(intent);
+    }
 }

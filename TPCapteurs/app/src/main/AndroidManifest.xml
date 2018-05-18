@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".Exercice1" />
         <activity android:name=".Exercice2" />
-        <activity android:name=".Exercice3"></activity>
+        <activity android:name=".Exercice3" />
+        <activity android:name=".Exercice4"></activity>
     </application>
 
 </manifest>
